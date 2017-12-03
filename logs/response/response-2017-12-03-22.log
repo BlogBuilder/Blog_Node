@@ -1,0 +1,216 @@
+[2017-12-03 22:44:37.584] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 286
+response status: 200
+response body: 
+"<!DOCTYPE html><html><head><title>Hello Koa 2!</title><link rel=\"stylesheet\" href=\"/stylesheets/style.css\"></head><body><h1>Hello Koa 2!</h1><p>Welcome to Hello Koa 2!</p></body></html>"
+*************** response log end ***************
+
+[2017-12-03 22:44:37.855] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /favicon.ico
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 1
+response status: 404
+response body: 
+undefined
+*************** response log end ***************
+
+[2017-12-03 22:44:38.876] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 14
+response status: 200
+response body: 
+"<!DOCTYPE html><html><head><title>Hello Koa 2!</title><link rel=\"stylesheet\" href=\"/stylesheets/style.css\"></head><body><h1>Hello Koa 2!</h1><p>Welcome to Hello Koa 2!</p></body></html>"
+*************** response log end ***************
+
+[2017-12-03 22:50:15.174] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/getUser
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 0
+response status: 200
+response body: 
+{"code":0,"message":"success"}
+*************** response log end ***************
+
+[2017-12-03 22:50:20.736] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/getUser
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 0
+response status: 200
+response body: 
+{"code":0,"message":"success"}
+*************** response log end ***************
+
+[2017-12-03 22:50:30.988] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/registeruser
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 0
+response status: 200
+response body: 
+{"code":0,"message":"success"}
+*************** response log end ***************
+
+[2017-12-03 22:54:27.220] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/registeruser
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 2
+response status: 200
+response body: 
+{"code":0,"message":"success"}
+*************** response log end ***************
+
+[2017-12-03 22:54:37.078] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/user/registeruser
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 0
+response status: 200
+response body: 
+{"code":0,"message":"success"}
+*************** response log end ***************
+
+[2017-12-03 22:54:42.598] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/tags/registeruser
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 0
+response status: 200
+response body: 
+{"code":0,"message":"success"}
+*************** response log end ***************
+
+[2017-12-03 22:54:45.325] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/tag/registeruser
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 0
+response status: 200
+response body: 
+{"code":0,"message":"success"}
+*************** response log end ***************
+
+[2017-12-03 22:54:48.086] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/tags/registeruser
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 0
+response status: 200
+response body: 
+{"code":0,"message":"success"}
+*************** response log end ***************
+
+[2017-12-03 22:55:17.476] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/1.0/tags/registeruser
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 0
+response status: 200
+response body: 
+{"code":0,"message":"success"}
+*************** response log end ***************
+
+[2017-12-03 22:55:33.403] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/v1/tags/registeruser
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 0
+response status: 200
+response body: 
+{"code":0,"message":"success"}
+*************** response log end ***************
+
+[2017-12-03 22:55:34.605] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/v1/tags/registeruser
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 0
+response status: 200
+response body: 
+{"code":0,"message":"success"}
+*************** response log end ***************
+
+[2017-12-03 22:56:06.538] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/v1/tags/getUser?id=1
+request client ip:  ::ffff:127.0.0.1
+request query:  {"id":"1"}
+response time: 0
+response status: 200
+response body: 
+{"code":0,"message":"success","data":{"username":"瞿龙俊","age":26}}
+*************** response log end ***************
+
+[2017-12-03 22:56:11.889] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/v1/tags/getUser?id=1
+request client ip:  ::ffff:127.0.0.1
+request query:  {"id":"1"}
+response time: 0
+response status: 200
+response body: 
+{"code":0,"message":"success","data":{"username":"瞿龙俊","age":26}}
+*************** response log end ***************
+
+[2017-12-03 22:56:19.719] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/v1/tags/getUser?id=1
+request client ip:  ::ffff:127.0.0.1
+request query:  {"id":"1"}
+response time: 2
+response status: 200
+response body: 
+{"code":0,"message":"success","data":{"username":"瞿龙俊1","age":26}}
+*************** response log end ***************
+
+[2017-12-03 22:56:20.593] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/v1/tags/getUser?id=1
+request client ip:  ::ffff:127.0.0.1
+request query:  {"id":"1"}
+response time: 0
+response status: 200
+response body: 
+{"code":0,"message":"success","data":{"username":"瞿龙俊1","age":26}}
+*************** response log end ***************
+

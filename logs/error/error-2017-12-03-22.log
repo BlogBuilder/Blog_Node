@@ -1,0 +1,28 @@
+[2017-12-03 22:55:50.771] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1/tags/getUser
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 1
+err name: userNotExist
+err message: 用户不存在
+err stack: userNotExist: 用户不存在
+    at exports.getuser (/Users/qulongjun/Project/Blog_Node/app/controllers/tag_controller.js:7:15)
+    at dispatch (/Users/qulongjun/Project/Blog_Node/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at next (/Users/qulongjun/Project/Blog_Node/node_modules/koa-router/node_modules/koa-compose/index.js:45:18)
+    at /Users/qulongjun/Project/Blog_Node/node_modules/koa-router/lib/router.js:345:16
+    at dispatch (/Users/qulongjun/Project/Blog_Node/node_modules/koa-router/node_modules/koa-compose/index.js:44:32)
+    at /Users/qulongjun/Project/Blog_Node/node_modules/koa-router/node_modules/koa-compose/index.js:36:12
+    at dispatch (/Users/qulongjun/Project/Blog_Node/node_modules/koa-router/lib/router.js:350:31)
+    at dispatch (/Users/qulongjun/Project/Blog_Node/node_modules/koa-compose/index.js:42:32)
+    at next (/Users/qulongjun/Project/Blog_Node/node_modules/koa-compose/index.js:43:18)
+    at /Users/qulongjun/Project/Blog_Node/middlewares/response_formatter.js:28:19
+    at dispatch (/Users/qulongjun/Project/Blog_Node/node_modules/koa-compose/index.js:42:32)
+    at next (/Users/qulongjun/Project/Blog_Node/node_modules/koa-compose/index.js:43:18)
+    at app.use (/Users/qulongjun/Project/Blog_Node/app.js:34:11)
+    at dispatch (/Users/qulongjun/Project/Blog_Node/node_modules/koa-compose/index.js:42:32)
+    at next (/Users/qulongjun/Project/Blog_Node/node_modules/koa-compose/index.js:43:18)
+    at views (/Users/qulongjun/Project/Blog_Node/node_modules/koa-views/lib/index.js:61:12)
+*************** error log end ***************
+

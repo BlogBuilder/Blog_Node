@@ -1,0 +1,124 @@
+#!/usr/bin/env node
+
+/**
+ * 模块依赖
+ */
+
+var app = require('../app');
+var debug = require('debug')('demo:server');
+var http = require('http');
+var config = require('../config');
+var fs = require('fs');
+var logConfig = require('../config/log_config');
+
+/**
+ * 创建日志文件目录
+ */
+var confirmPath = function (pathStr) {
+
+  if (!fs.existsSync(pathStr)) {
+    fs.mkdirSync(pathStr);
+    console.log('createPath: ' + pathStr);
+  }
+}
+
+/**
+ * 初始化日志相关目录
+ */
+var initLogPath = function () {
+  //创建log的根目录'logs'
+  if (logConfig.baseLogPath) {
+    confirmPath(logConfig.baseLogPath)
+    //根据不同的logType创建不同的文件目录
+    for (var i = 0, len = logConfig.appenders.length; i < len; i++) {
+      if (logConfig.appenders[i].path) {
+        confirmPath(logConfig.baseLogPath + logConfig.appenders[i].path);
+      }
+    }
+  }
+}
+
+initLogPath();
+
+/**
+ * 获取端口号
+ */
+
+// var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(config.port || '3000');
+console.log('port = ' + port);
+
+/**
+ * 创建 HTTP Server.
+ */
+
+var server = http.createServer(app.callback());
+
+/**
+ * 监听端口
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * 标准端口号是一个数字、字符串，否则false
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Error 事件监听器
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * 
+ * Listening 事件监听器
+ * 
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}

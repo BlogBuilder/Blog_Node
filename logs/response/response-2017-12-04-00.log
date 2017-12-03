@@ -1,0 +1,84 @@
+[2017-12-04 00:00:12.267] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/v1/tags/registeruser?id=1
+request client ip:  ::ffff:127.0.0.1
+request query:  {"id":"1"}
+response time: 1
+response status: 200
+response body: 
+{"code":0,"message":"success"}
+*************** response log end ***************
+
+[2017-12-04 00:00:16.345] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/v1/tags/getUser?id=1
+request client ip:  ::ffff:127.0.0.1
+request query:  {"id":"1"}
+response time: 6
+response status: 200
+response body: 
+{"code":0,"message":"success","data":{"username":"瞿龙俊1","age":26}}
+*************** response log end ***************
+
+[2017-12-04 00:03:08.431] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/v1/tags/getUser?id=1
+request client ip:  ::ffff:127.0.0.1
+request query:  {"id":"1"}
+response time: 5
+response status: 200
+response body: 
+{"code":0,"message":"success","data":{"username":"瞿龙俊1","age":26}}
+*************** response log end ***************
+
+[2017-12-04 00:03:09.463] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/v1/tags/getUser?id=1
+request client ip:  ::ffff:127.0.0.1
+request query:  {"id":"1"}
+response time: 0
+response status: 200
+response body: 
+{"code":0,"message":"success","data":{"username":"瞿龙俊1","age":26}}
+*************** response log end ***************
+
+[2017-12-04 00:04:48.112] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/v1/tags/getUser?id=1
+request client ip:  ::ffff:127.0.0.1
+request query:  {"id":"1"}
+response time: 6
+response status: 200
+response body: 
+{"code":0,"message":"success","data":{"username":"瞿龙俊1","age":26}}
+*************** response log end ***************
+
+[2017-12-04 00:04:56.902] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/v1/tags/getUser?id=1
+request client ip:  ::ffff:127.0.0.1
+request query:  {"id":"1"}
+response time: 1
+response status: 200
+response body: 
+{"code":0,"message":"success","data":{"username":"瞿龙俊1","age":26}}
+*************** response log end ***************
+
+[2017-12-04 00:04:57.456] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/v1/tags/getUser?id=1
+request client ip:  ::ffff:127.0.0.1
+request query:  {"id":"1"}
+response time: 0
+response status: 200
+response body: 
+{"code":0,"message":"success","data":{"username":"瞿龙俊1","age":26}}
+*************** response log end ***************
+
