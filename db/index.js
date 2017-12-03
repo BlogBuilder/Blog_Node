@@ -5,7 +5,7 @@ const Sequelize = require('sequelize');
 const config = require('./default');
 
 //创建一个sequelize对象实例：
-var sequelize = new Sequelize(config.DATABASE, config.USERNAME, config.PASSWORD, {
+const sequelize = new Sequelize(config.DATABASE, config.USERNAME, config.PASSWORD, {
     host: config.HOST,
     dialect: 'mysql',
     pool: {
@@ -14,6 +14,8 @@ var sequelize = new Sequelize(config.DATABASE, config.USERNAME, config.PASSWORD,
         idle: 30000
     }
 });
+
+
 var Test = sequelize.define('db_pet', {
     id: {
         type: Sequelize.INTEGER,
