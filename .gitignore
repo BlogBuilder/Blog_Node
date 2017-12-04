@@ -1,3 +1,4 @@
 node_modules/
-db/index.js
+db/default.js
 .idea/
+logs/
