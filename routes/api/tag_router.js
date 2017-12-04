@@ -1,10 +1,13 @@
 /**
- * Blog 标签路由
+ * TAG路由
  */
-var router = require('koa-router')();
-var tag_controller = require('../../app/controllers/tag_controller');
+const router = require('koa-router')();
+const tag_controller = require('../../app/controllers/tags');
 
-router.get('/getUser', tag_controller.getuser);
-router.post('/registeruser', tag_controller.registeruser);
-
+router.get('/list', tag_controller.list);
+router.post('/create', tag_controller.create);
+router.put('/update/:id', tag_controller.update);
+router.delete('/destroy/:id', tag_controller.destroy);
+router.get('/findById/:id', tag_controller.findById);
+router.get('/findByName/:name', tag_controller.findByName);
 module.exports = router;
