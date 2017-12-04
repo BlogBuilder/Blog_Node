@@ -4,7 +4,6 @@ const Sequelize = require('sequelize');
 
 const config = require('./default');
 
-//创建一个sequelize对象实例：
 const sequelize = new Sequelize(config.DATABASE, config.USERNAME, config.PASSWORD, {
     host: config.HOST,
     dialect: 'mysql',
@@ -15,68 +14,80 @@ const sequelize = new Sequelize(config.DATABASE, config.USERNAME, config.PASSWOR
     }
 });
 
-
-var Test = sequelize.define('db_pet', {
+const Tag = sequelize.define('tag', {
     id: {
         type: Sequelize.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
-    name: Sequelize.STRING
+    name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+    },
 }, {
-    timestamps: false,
-    freezeTableName: true, // 默认false修改表名为复数，true不修改表名，与数据库表名同步
+    freezeTableName: true,
+    tableName: 'db_tag',
+    timestamps: true,
+    createdAt: 'create_time',
+    updatedAt: 'update_time',
+    deletedAt: false
+});
+
+const Article = sequelize.define('article', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    type: Sequelize.INTEGER,
+    title: {
+        type: Sequelize.STRING,
+        length: 100
+    },
+    summary: {
+        type: Sequelize.STRING,
+        length: 2000
+    },
+    content: Sequelize.TEXT,
+    state: {
+        type: Sequelize.INTEGER,
+        notNull: true,
+        default: 0
+    },
+    viewCount: {
+        type: Sequelize.INTEGER,
+        notNull: true,
+        default: 0
+    }
+
+}, {
+    freezeTableName: true,
+    tableName: 'db_article',
+    timestamps: true,
+    createdAt: 'create_time',
+    updatedAt: 'update_time',
+    deletedAt: false
 });
 
 
-const write = function () {
-    (async() => {
-        var dog = await Test.create({
-            name: "测试"
-        });
-        console.log('created: ' + JSON.stringify(dog));
-    })();
-}
-
-const read = async() => {
-    var pets = await Test.findAll({
-        where: {
-            name: '测试'
-        }
-    });
-    console.log(`find ${pets.length} pets:`);
-    for (let p of pets) {
-        console.log(JSON.stringify(p));
+const Article_Tag = sequelize.define('article_tag', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
     }
-    return pets;
-
-};
-
-const update = (async() => {
-    try {
-        var pets = await read();
-        for (let p of pets) {
-            p.name = "测试2";
-            await p.save();
-        }
-    } catch (err) {
-        console.log(err);
-    }
+}, {
+    freezeTableName: true,
+    tableName: 'db_article_tag',
+    timestamps: false
 });
 
-const deleteData = (async() => {
-    try {
-        var pets = await read();
-        for (let p of pets) {
-            await p.destroy();
-        }
-    } catch (err) {
-        console.log(err);
-    }
-});
+Article.belongsToMany(Tag, {through: Article_Tag});
+Tag.belongsToMany(Article, {through: Article_Tag});
 
 module.exports = {
-    write,
-    read,
-    update,
-    deleteData
+    Tag,
+    Article,
+    Article_Tag
 };
