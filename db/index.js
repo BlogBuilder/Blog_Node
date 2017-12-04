@@ -14,6 +14,7 @@ const sequelize = new Sequelize(config.DATABASE, config.USERNAME, config.PASSWOR
     }
 });
 
+//标签数据表
 const Tag = sequelize.define('tag', {
     id: {
         type: Sequelize.INTEGER,
@@ -24,7 +25,7 @@ const Tag = sequelize.define('tag', {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
-    },
+    }
 }, {
     freezeTableName: true,
     tableName: 'db_tag',
@@ -34,6 +35,28 @@ const Tag = sequelize.define('tag', {
     deletedAt: false
 });
 
+//分类数据表
+const Category = sequelize.define('category', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+    }
+}, {
+    freezeTableName: true,
+    tableName: 'db_category',
+    timestamps: true,
+    createdAt: 'create_time',
+    updatedAt: 'update_time',
+    deletedAt: false
+});
+
+//文章数据表
 const Article = sequelize.define('article', {
     id: {
         type: Sequelize.INTEGER,
@@ -71,6 +94,7 @@ const Article = sequelize.define('article', {
 });
 
 
+//文章 标签 中间表
 const Article_Tag = sequelize.define('article_tag', {
     id: {
         type: Sequelize.INTEGER,
@@ -83,11 +107,18 @@ const Article_Tag = sequelize.define('article_tag', {
     timestamps: false
 });
 
+//文章 分类 关联
+Article.belongsTo(Category);
+// Category.hasMany(Article);
+
+//文章 标签 关联
 Article.belongsToMany(Tag, {through: Article_Tag});
 Tag.belongsToMany(Article, {through: Article_Tag});
 
+
 module.exports = {
     Tag,
+    Category,
     Article,
     Article_Tag
 };

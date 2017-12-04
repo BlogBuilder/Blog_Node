@@ -2,7 +2,7 @@
  * TAG路由
  */
 const router = require('koa-router')();
-const tag_controller = require('../../app/controllers/tags');
+const tag_controller = require('../../app/controllers/tag');
 
 router.get('/list', tag_controller.list);
 router.post('/create', tag_controller.create);

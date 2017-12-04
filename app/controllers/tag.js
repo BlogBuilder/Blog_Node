@@ -1,5 +1,5 @@
 /**
- * Tags
+ * Tag
  */
 const {Tag} = require('../../db/index');
 const {_toListJson} = require('../format/tagFormat');
