@@ -8,7 +8,7 @@ const logger = require('koa-logger')
 const logUtil = require('./utils/log_utils');
 
 
-const domain = require('./db/index');
+const DB = require('./db/db');
 
 const index = require('./routes/index')
 const response_formatter = require('./middlewares/response_formatter');
@@ -30,11 +30,11 @@ app.use(views(__dirname + '/views', {
     extension: 'pug'
 }));
 
-for (let key in domain)
-    domain[key].sync();
+for (let key in DB)
+    DB[key].sync();
 
 // logger
-app.use(async (ctx, next) => {
+app.use(async(ctx, next) => {
     const start = new Date();
     let ms;
     try {

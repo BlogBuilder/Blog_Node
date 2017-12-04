@@ -1,7 +1,7 @@
 /**
  * Tag
  */
-const {Tag} = require('../../db/index');
+const {Tag} = require('../../db/db');
 const {_toListJson} = require('../format/tagFormat');
 let ApiError = require('../error/ApiError');
 const ApiErrorNames = require('../error/ApiErrorNames');
@@ -13,7 +13,7 @@ const ApiErrorNames = require('../error/ApiErrorNames');
  * @param next
  * @returns {Promise.<void>}
  */
-const list = async (ctx, next) => {
+const list = async(ctx, next) => {
     try {
         let tags = await Tag.findAll();
         ctx.body = {
@@ -32,7 +32,7 @@ const list = async (ctx, next) => {
  * @param next
  * @returns {Promise.<void>}
  */
-const create = async (ctx, next) => {
+const create = async(ctx, next) => {
     try {
         await Tag.create({
             'name': ctx.request.body.name
@@ -51,7 +51,7 @@ const create = async (ctx, next) => {
  * @param next
  * @returns {Promise.<void>}
  */
-const update = async (ctx, next) => {
+const update = async(ctx, next) => {
     try {
         let tagId = ctx.params.id;
         let tag = await Tag.findById(tagId);
@@ -73,7 +73,7 @@ const update = async (ctx, next) => {
  * @param next
  * @returns {Promise.<void>}
  */
-const destroy = async (ctx, next) => {
+const destroy = async(ctx, next) => {
     try {
         let tagId = ctx.params.id;
         let tag = await Tag.findById(tagId);
@@ -93,7 +93,7 @@ const destroy = async (ctx, next) => {
  * @param next
  * @returns {Promise.<void>}
  */
-const findById = async (ctx, next) => {
+const findById = async(ctx, next) => {
     try {
         let tagId = ctx.params.id;
         let tag = await Tag.findById(tagId);
@@ -116,7 +116,7 @@ const findById = async (ctx, next) => {
  * @param next
  * @returns {Promise.<void>}
  */
-const findByName = async (ctx, next) => {
+const findByName = async(ctx, next) => {
     try {
         let tagName = ctx.params.name;
         let tags = await Tag.findAll({

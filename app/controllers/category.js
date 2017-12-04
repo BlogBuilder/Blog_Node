@@ -2,7 +2,7 @@
  * Category
  */
 
-const {Category} = require('../../db/index');
+const {Category} = require('../../db/db');
 const {_toListJson} = require('../format/categoryFormat');
 let ApiError = require('../error/ApiError');
 const ApiErrorNames = require('../error/ApiErrorNames');
