@@ -1,0 +1,224 @@
+[2017-12-04 12:25:25.509] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1.0/tags/list
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 182
+err name: serviceError
+err message: 服务器异常
+err stack: serviceError: 服务器异常
+    at exports.list (/Users/qulongjun/Project/Blog_Node/app/controllers/tags.js:27:15)
+    at <anonymous>
+*************** error log end ***************
+
+[2017-12-04 12:25:26.543] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1.0/tags/list
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 19
+err name: serviceError
+err message: 服务器异常
+err stack: serviceError: 服务器异常
+    at exports.list (/Users/qulongjun/Project/Blog_Node/app/controllers/tags.js:27:15)
+    at <anonymous>
+*************** error log end ***************
+
+[2017-12-04 12:26:46.210] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1.0/tags/list
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 201
+err name: serviceError
+err message: 服务器异常
+err stack: serviceError: 服务器异常
+    at exports.list (/Users/qulongjun/Project/Blog_Node/app/controllers/tags.js:27:15)
+    at <anonymous>
+*************** error log end ***************
+
+[2017-12-04 12:27:02.142] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1.0/tags/list
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 164
+err name: serviceError
+err message: 服务器异常
+err stack: serviceError: 服务器异常
+    at exports.list (/Users/qulongjun/Project/Blog_Node/app/controllers/tags.js:27:15)
+    at <anonymous>
+*************** error log end ***************
+
+[2017-12-04 12:27:03.011] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1.0/tags/list
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 16
+err name: serviceError
+err message: 服务器异常
+err stack: serviceError: 服务器异常
+    at exports.list (/Users/qulongjun/Project/Blog_Node/app/controllers/tags.js:27:15)
+    at <anonymous>
+*************** error log end ***************
+
+[2017-12-04 12:27:51.054] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1.0/tags/list
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 176
+err name: serviceError
+err message: 服务器异常
+err stack: serviceError: 服务器异常
+    at exports.list (/Users/qulongjun/Project/Blog_Node/app/controllers/tags.js:27:15)
+    at <anonymous>
+*************** error log end ***************
+
+[2017-12-04 12:27:52.323] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1.0/tags/list
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 17
+err name: serviceError
+err message: 服务器异常
+err stack: serviceError: 服务器异常
+    at exports.list (/Users/qulongjun/Project/Blog_Node/app/controllers/tags.js:27:15)
+    at <anonymous>
+*************** error log end ***************
+
+[2017-12-04 12:28:01.419] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1.0/tags/list
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 74
+err name: serviceError
+err message: 服务器异常
+err stack: serviceError: 服务器异常
+    at exports.list (/Users/qulongjun/Project/Blog_Node/app/controllers/tags.js:27:15)
+    at <anonymous>
+*************** error log end ***************
+
+[2017-12-04 12:28:02.205] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1.0/tags/list
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 15
+err name: serviceError
+err message: 服务器异常
+err stack: serviceError: 服务器异常
+    at exports.list (/Users/qulongjun/Project/Blog_Node/app/controllers/tags.js:27:15)
+    at <anonymous>
+*************** error log end ***************
+
+[2017-12-04 12:34:55.760] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1.0/tags/list
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 288
+err name: serviceError
+err message: 服务器异常
+err stack: serviceError: 服务器异常
+    at exports.list (/Users/qulongjun/Project/Blog_Node/app/controllers/tags.js:27:15)
+    at <anonymous>
+*************** error log end ***************
+
+[2017-12-04 12:50:29.095] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1.0/tags/list
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 210
+err name: serviceError
+err message: 服务器异常
+err stack: serviceError: 服务器异常
+    at exports.list (/Users/qulongjun/Project/Blog_Node/app/controllers/tags.js:27:15)
+    at <anonymous>
+*************** error log end ***************
+
+[2017-12-04 12:50:30.036] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1.0/tags/list
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 21
+err name: serviceError
+err message: 服务器异常
+err stack: serviceError: 服务器异常
+    at exports.list (/Users/qulongjun/Project/Blog_Node/app/controllers/tags.js:27:15)
+    at <anonymous>
+*************** error log end ***************
+
+[2017-12-04 12:52:00.067] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1.0/tags/list
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 189
+err name: serviceError
+err message: 服务器异常
+err stack: serviceError: 服务器异常
+    at exports.list (/Users/qulongjun/Project/Blog_Node/app/controllers/tags.js:27:15)
+    at <anonymous>
+*************** error log end ***************
+
+[2017-12-04 12:52:00.877] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1.0/tags/list
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 15
+err name: serviceError
+err message: 服务器异常
+err stack: serviceError: 服务器异常
+    at exports.list (/Users/qulongjun/Project/Blog_Node/app/controllers/tags.js:27:15)
+    at <anonymous>
+*************** error log end ***************
+
+[2017-12-04 12:52:03.140] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1.0/tags/list
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 18
+err name: serviceError
+err message: 服务器异常
+err stack: serviceError: 服务器异常
+    at exports.list (/Users/qulongjun/Project/Blog_Node/app/controllers/tags.js:27:15)
+    at <anonymous>
+*************** error log end ***************
+
+[2017-12-04 12:52:09.248] [ERROR] errorLogger - 
+*************** error log start ***************
+request method: GET
+request originalUrl:  /api/v1.0/tags/list
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 19
+err name: serviceError
+err message: 服务器异常
+err stack: serviceError: 服务器异常
+    at exports.list (/Users/qulongjun/Project/Blog_Node/app/controllers/tags.js:27:15)
+    at <anonymous>
+*************** error log end ***************
+
