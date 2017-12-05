@@ -9,7 +9,7 @@ let debug = require('debug')('demo:server');
 let http = require('http');
 let config = require('../config');
 let fs = require('fs');
-let logConfig = require('../config/log_config');
+let logConfig = require('../config/logConfig');
 
 /**
  * 创建日志文件目录

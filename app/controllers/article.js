@@ -4,7 +4,7 @@
 
 const {Article, Category, Tag} = require('../../db/db');
 const {countPerPage} = require('../../config/default');
-const {getCurrentMonthFirst, getCurrentMonthLast} = require('../../utils/date');
+const {getCurrentMonthFirst, getCurrentMonthLast} = require('../../utils/dateUtils');
 const ApiError = require('../error/ApiError');
 const ApiErrorNames = require('../error/ApiErrorNames');
 
