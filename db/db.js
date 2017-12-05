@@ -1,6 +1,37 @@
 const Sequelize = require('sequelize');
 const sequelize = require('./index');
 
+const User = sequelize.define('user', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+    },
+    password: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+    },
+    count: {
+        type: Sequelize.INTEGER,
+        notNull: true,
+        defaultValue: 0
+    }
+}, {
+    freezeTableName: true,
+    tableName: 'db_user',
+    timestamps: true,
+    createdAt: 'create_time',
+    updatedAt: 'update_time',
+    deletedAt: 'delete_time',
+    paranoid: true
+});
+
 //标签数据表
 const Tag = sequelize.define('tag', {
     id: {
