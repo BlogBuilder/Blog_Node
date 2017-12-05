@@ -16,7 +16,7 @@ const list = async (ctx, next) => {
     try {
         let tags = await Tag.findAll();
         ctx.body = {
-            results: _toListJson(tags)
+            results: await _toListJson(tags)
         };
     } catch (err) {
         throw err;

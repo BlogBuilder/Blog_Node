@@ -14,7 +14,8 @@ const sequelize = new Sequelize(config.DATABASE, config.USERNAME, config.PASSWOR
         min: 0,
         idle: 30000
     },
-    logging: system.env === "development"
+    logging: system.env === "development",
+    timezone: '+08:00' //东八时区
 });
 
 module.exports = sequelize;
