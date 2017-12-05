@@ -21,7 +21,7 @@ const ApiErrorNames = require('../error/ApiErrorNames');
  * @param next
  * @returns {Promise.<void>}
  */
-const list = async (ctx, next) => {
+const list = async(ctx, next) => {
     try {
         let data = ctx.request.query;
         let query = {};
@@ -74,7 +74,10 @@ const list = async (ctx, next) => {
             limit: countPerPage,
             offset: countPerPage * (currentPage - 1),
             include: includes,
-            where: query
+            where: query,
+            order: [
+                ["id", "DESC"]
+            ]
         });
         let results = await _toArticleJson(articles.rows);
         ctx.body = {
@@ -104,7 +107,7 @@ const list = async (ctx, next) => {
  * @param next
  * @returns {Promise.<void>}
  */
-const create = async (ctx, next) => {
+const create = async(ctx, next) => {
     try {
         let data = ctx.request.body;
         let article = await Article.create({
@@ -131,6 +134,7 @@ const create = async (ctx, next) => {
                 article.createMaterial({path: item});
             })
         }
+
     } catch (err) {
         throw err;
     }
@@ -154,7 +158,7 @@ const create = async (ctx, next) => {
  * @param next
  * @returns {Promise.<void>}
  */
-const update = async (ctx, next) => {
+const update = async(ctx, next) => {
     try {
         let data = ctx.request.body;
         let article = await Article.findById(ctx.params.id);
@@ -207,7 +211,7 @@ const update = async (ctx, next) => {
  * @param next
  * @returns {Promise.<void>}
  */
-const findById = async (ctx, next) => {
+const findById = async(ctx, next) => {
     try {
         let articleId = ctx.params.id;
         let article = await Article.findById(articleId);
@@ -223,7 +227,6 @@ const findById = async (ctx, next) => {
 };
 
 
-
 /**
  * 删除文章：/api/v1.0/article/destroy/:id DELETE
  *
@@ -233,7 +236,7 @@ const findById = async (ctx, next) => {
  * @param next
  * @returns {Promise.<void>}
  */
-const destroy = async (ctx, next) => {
+const destroy = async(ctx, next) => {
     try {
         let articleId = ctx.params.id;
         let article = await Article.findById(articleId);
@@ -254,7 +257,7 @@ const destroy = async (ctx, next) => {
  * @returns {Promise.<Array>}
  * @private
  */
-const _toArticleJson = async (articles) => {
+const _toArticleJson = async(articles) => {
     let results = [];
     for (let i = 0; i < articles.length; i++) {
         let item = articles[i];
@@ -281,7 +284,7 @@ const _toArticleJson = async (articles) => {
  * @returns {Promise.<*>}
  * @private
  */
-const _toDetailJson = async (article) => {
+const _toDetailJson = async(article) => {
     let data = article.dataValues;
     data.category = await article.getCategory({
         'attributes': ['id', 'name']

@@ -14,7 +14,9 @@ const ApiErrorNames = require('../error/ApiErrorNames');
  */
 const list = async (ctx, next) => {
     try {
-        let tags = await Tag.findAll();
+        let tags = await Tag.findAll({
+            attributes:["id","name"]
+        });
         ctx.body = {
             results: await _toListJson(tags)
         };

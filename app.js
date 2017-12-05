@@ -5,8 +5,7 @@ const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
 const logUtil = require('./utils/logUtils');
-
-
+const cors = require('koa-cors');
 const tables = require('./db/db');
 
 const index = require('./routes/index')
@@ -18,17 +17,20 @@ onerror(app);
 
 //参数解析
 app.use(bodyparser({
-    enableTypes: ['json', 'form', 'text']
+    enableTypes: ['json', 'form', 'text'],
+    formLimit: '10mb'
 }));
+
 
 app.use(json());
 app.use(logger());
+app.use(cors());
 
 //初始化数据库
 for (let name in tables) tables[name].sync();
 
 // 日志操作
-app.use(async (ctx, next) => {
+app.use(async(ctx, next) => {
     const start = new Date();
     let ms;
     try {
