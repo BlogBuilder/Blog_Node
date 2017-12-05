@@ -8,7 +8,7 @@ const ApiError = require('../error/ApiError');
 const ApiErrorNames = require('../error/ApiErrorNames');
 
 /**
- * 文章列表：/api/v1.0/category/list  GET
+ * 文章列表：/api/v1.0/article/list/:currentPage  GET
  *
  * @param ctx
  * @param next
@@ -18,8 +18,9 @@ const list = async(ctx, next) => {
     try {
         let currentPage = ctx.params.currentPage;
         let articles = await Article.findAndCountAll({
-            'limit': defaults.countPerPage,
-            'offset': defaults.countPerPage * (currentPage - 1)
+            attributes: ["id", "type", "title", "summary", "categoryId", "create_time"],
+            limit: defaults.countPerPage,
+            offset: defaults.countPerPage * (currentPage - 1)
         });
         let results = await _toArticleJson(articles.rows);
         ctx.body = {
@@ -74,6 +75,30 @@ const create = async(ctx, next) => {
 };
 
 
+/**
+ * 根据ID查找文章 /api/v1.0/article/findById/:id  GET
+ *
+ *
+ * @param ctx
+ * @param next
+ * @returns {Promise.<void>}
+ */
+const findById = async(ctx, next) => {
+    try {
+        let articleId = ctx.params.id;
+        let article = await Article.findById(articleId);
+        if (article !== null) {
+            let results = await _toDetailJson(article]);
+            ctx.body = {
+                results: results
+            };
+        } else throw new ApiError(ApiErrorNames.ID_NOT_EXIST);
+    } catch (err) {
+        throw err;
+    }
+};
+
+
 const _toArticleJson = async(articles) => {
     let results = [];
     for (let i = 0; i < articles.length; i++) {
@@ -88,13 +113,29 @@ const _toArticleJson = async(articles) => {
         data.materials = await item.getMaterials({
             'attributes': ['id', 'path']
         });
+        delete data.categoryId;
         results.push(data);
     }
     return results;
 };
 
 
+const _toDetailJson = async(article) => {
+    let data = article.dataValues;
+    data.category = await article.getCategory({
+        'attributes': ['id', 'name']
+    });
+    data.tags = await article.getTags({
+        'attributes': ['id', 'name']
+    });
+    data.materials = await article.getMaterials({
+        'attributes': ['id', 'path']
+    });
+    delete data.categoryId;
+    return results;
+};
+
+
 module.exports = {
-    list,
-    create
+    list, create, findById
 };
