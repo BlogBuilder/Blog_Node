@@ -84,7 +84,6 @@ const list = async (ctx, next) => {
             totalPage: articles.count / countPerPage
         };
     } catch (err) {
-        console.log(err);
         throw err;
     }
 };
@@ -133,7 +132,66 @@ const create = async (ctx, next) => {
             })
         }
     } catch (err) {
-        console.log(err);
+        throw err;
+    }
+};
+
+
+/**
+ * 更新文章：/api/v1.0/article/update/:id  PUT
+ *
+ * id：文章Id Integer
+ * type：文章类型 Integer
+ * title：文章标题 String
+ * summary:文章摘要 String
+ * content：文章正文 String
+ * state：文章状态 Integer
+ * tags：所属标签 Array[Integer]
+ * categoryId：所属分类 Integer
+ * materials：素材头图、视频、音频 Array[String]
+ *
+ * @param ctx
+ * @param next
+ * @returns {Promise.<void>}
+ */
+const update = async (ctx, next) => {
+    try {
+        let data = ctx.request.body;
+        let article = await Article.findById(ctx.params.id);
+        if (article !== null) {
+            await article.update({
+                type: data.type,
+                title: data.title,
+                summary: data.summary,
+                content: data.content,
+                state: data.state
+            });
+            let category = await Category.findById(data.categoryId);
+            article.setCategory(category);
+            await article.removeTag();
+            if (data.tags.length !== 0) {
+                let tagList = await Tag.findAll({
+                    where: {
+                        id: {
+                            '$in': data.tags,
+                        }
+                    }
+                });
+                article.setTags(tagList);
+            }
+            let currentMaterials = await article.getMaterials();
+            if (currentMaterials.length !== 0) {
+                for (let m = 0; m < currentMaterials.length; m++) {
+                    await article.removeMaterial(currentMaterials[m]);
+                }
+            }
+            if (data.materials.length !== 0) {
+                data.materials.forEach((item) => {
+                    article.createMaterial({path: item});
+                })
+            }
+        } else throw new ApiError(ApiErrorNames.ID_NOT_EXIST);
+    } catch (err) {
         throw err;
     }
 };
@@ -156,11 +214,33 @@ const findById = async (ctx, next) => {
         if (article !== null) {
             let results = await _toDetailJson(article);
             ctx.body = {
-                results: results
+                results: [results]
             };
         } else throw new ApiError(ApiErrorNames.ID_NOT_EXIST);
     } catch (err) {
-        console.log(err);
+        throw err;
+    }
+};
+
+
+
+/**
+ * 删除文章：/api/v1.0/article/destroy/:id DELETE
+ *
+ * id:文章id Integer
+ *
+ * @param ctx
+ * @param next
+ * @returns {Promise.<void>}
+ */
+const destroy = async (ctx, next) => {
+    try {
+        let articleId = ctx.params.id;
+        let article = await Article.findById(articleId);
+        if (article !== null) {
+            await article.destroy();
+        } else throw new ApiError(ApiErrorNames.ID_NOT_EXIST);
+    } catch (err) {
         throw err;
     }
 };
@@ -237,5 +317,5 @@ const _toDetailJson = async (article) => {
 
 
 module.exports = {
-    list, create, findById
+    list, create, update, findById, destroy
 };

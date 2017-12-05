@@ -17,6 +17,7 @@ const error_catch = require('./middlewares/error_catch');
 // error handler
 onerror(app)
 
+
 // middlewares
 app.use(bodyparser({
     enableTypes: ['json', 'form', 'text']
@@ -34,7 +35,7 @@ for (let key in DB)
     DB[key].sync();
 
 // logger
-app.use(async(ctx, next) => {
+app.use(async (ctx, next) => {
     const start = new Date();
     let ms;
     try {
