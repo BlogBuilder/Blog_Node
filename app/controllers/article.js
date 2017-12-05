@@ -1,33 +1,87 @@
 /**
- * Article
+ * Article API
  */
 
 const {Article, Category, Tag} = require('../../db/db');
-const defaults = require('../../config/default');
+const {countPerPage} = require('../../config/default');
+const {getCurrentMonthFirst, getCurrentMonthLast} = require('../../utils/date');
 const ApiError = require('../error/ApiError');
 const ApiErrorNames = require('../error/ApiErrorNames');
 
 /**
  * 文章列表：/api/v1.0/article/list/:currentPage  GET
  *
+ * currentPage：当前页码：Integer
+ * key：关键字 String
+ * categoryId：分类Id Integer
+ * tagsId[]：标签Id列表 Array[Integer]
+ * create_time：创建时间 String yyyy-mm
+ *
  * @param ctx
  * @param next
  * @returns {Promise.<void>}
  */
-const list = async(ctx, next) => {
+const list = async (ctx, next) => {
     try {
+        let data = ctx.request.query;
+        let query = {};
+        let includes = [];
+        //关键字查询
+        if (data["key"]) {
+            query['$or'] = [
+                {
+                    title: {
+                        '$like': '%' + data["key"] + '%',
+                    }
+                }, {
+                    summary: {
+                        '$like': '%' + data["key"] + '%',
+                    }
+                }
+            ];
+        }
+        //文章分类查询
+        if (data["categoryId"]) {
+            includes.push({
+                'model': Category,
+                'where': {
+                    'id': data["categoryId"]
+                }
+            })
+        }
+        //文章标签查询
+        if (data["tagsId[]"]) {
+            console.log(data["tagsId[]"]);
+            includes.push({
+                'model': Tag,
+                'where': {
+                    'id': {
+                        '$in': data["tagsId[]"]
+                    }
+                }
+            })
+        }
+        //创建时间查询
+        if (data["create_time"]) {
+            query.create_time = {
+                $gte: getCurrentMonthFirst(data["create_time"]),
+                $lte: getCurrentMonthLast(data["create_time"])
+            }
+        }
         let currentPage = ctx.params.currentPage;
         let articles = await Article.findAndCountAll({
             attributes: ["id", "type", "title", "summary", "categoryId", "create_time"],
-            limit: defaults.countPerPage,
-            offset: defaults.countPerPage * (currentPage - 1)
+            limit: countPerPage,
+            offset: countPerPage * (currentPage - 1),
+            include: includes,
+            where: query
         });
         let results = await _toArticleJson(articles.rows);
         ctx.body = {
             results,
             currentPage,
-            rowCount: defaults.countPerPage,
-            totalPage: articles.count / defaults.countPerPage
+            rowCount: countPerPage,
+            totalPage: articles.count / countPerPage
         };
     } catch (err) {
         console.log(err);
@@ -38,18 +92,28 @@ const list = async(ctx, next) => {
 /**
  * 创建文章：/api/v1.0/article/create  POST
  *
+ * type：文章类型 Integer
+ * title：文章标题 String
+ * summary:文章摘要 String
+ * content：文章正文 String
+ * state：文章状态 Integer
+ * tags：所属标签 Array[Integer]
+ * categoryId：所属分类 Integer
+ * materials：素材头图、视频、音频 Array[String]
+ *
  * @param ctx
  * @param next
  * @returns {Promise.<void>}
  */
-const create = async(ctx, next) => {
+const create = async (ctx, next) => {
     try {
         let data = ctx.request.body;
         let article = await Article.create({
             type: data.type,
             title: data.title,
             summary: data.summary,
-            content: data.content
+            content: data.content,
+            state: data.state
         });
         let category = await Category.findById(data.categoryId);
         article.setCategory(category);
@@ -78,12 +142,14 @@ const create = async(ctx, next) => {
 /**
  * 根据ID查找文章 /api/v1.0/article/findById/:id  GET
  *
+ * id：文章Id Integer
+ *
  *
  * @param ctx
  * @param next
  * @returns {Promise.<void>}
  */
-const findById = async(ctx, next) => {
+const findById = async (ctx, next) => {
     try {
         let articleId = ctx.params.id;
         let article = await Article.findById(articleId);
@@ -100,7 +166,15 @@ const findById = async(ctx, next) => {
 };
 
 
-const _toArticleJson = async(articles) => {
+/**
+ * 将数据库对象数组转换为数据（JSON）对象数组
+ *
+ *
+ * @param articles 数据库对象数组
+ * @returns {Promise.<Array>}
+ * @private
+ */
+const _toArticleJson = async (articles) => {
     let results = [];
     for (let i = 0; i < articles.length; i++) {
         let item = articles[i];
@@ -120,8 +194,14 @@ const _toArticleJson = async(articles) => {
     return results;
 };
 
-
-const _toDetailJson = async(article) => {
+/**
+ * 将数据库对象转换为数据（JSON）对象
+ *
+ * @param article 数据库对象
+ * @returns {Promise.<*>}
+ * @private
+ */
+const _toDetailJson = async (article) => {
     let data = article.dataValues;
     data.category = await article.getCategory({
         'attributes': ['id', 'name']
@@ -132,7 +212,7 @@ const _toDetailJson = async(article) => {
     data.materials = await article.getMaterials({
         'attributes': ['id', 'path']
     });
-    data.prev = await Article.findOne({
+    data.next = await Article.findOne({
         attributes: ["id"],
         where: {
             id: {
@@ -140,7 +220,7 @@ const _toDetailJson = async(article) => {
             }
         }
     });
-    data.next = await Article.findOne({
+    data.prev = await Article.findOne({
         attributes: ["id"],
         where: {
             id: {

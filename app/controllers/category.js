@@ -1,9 +1,8 @@
 /**
- * Category
+ * Category API
  */
 
 const {Category} = require('../../db/db');
-const {_toListJson} = require('../format/categoryFormat');
 let ApiError = require('../error/ApiError');
 const ApiErrorNames = require('../error/ApiErrorNames');
 
@@ -16,9 +15,14 @@ const ApiErrorNames = require('../error/ApiErrorNames');
  */
 const list = async (ctx, next) => {
     try {
-        let categories = await Category.findAll();
+        let categories = await Category.findAll({
+            attributes: ["id", "name"],
+            order: [
+                "id"
+            ]
+        });
         ctx.body = {
-            results: _toListJson(categories)
+            results: await _toListJson(categories)
         };
     } catch (err) {
         throw err;
@@ -27,7 +31,8 @@ const list = async (ctx, next) => {
 
 /**
  * 创建分类：/api/v1.0/category/create  POST
- * name:唯一性约束、非空约束
+ *
+ * name:分类名称 String
  *
  * @param ctx
  * @param next
@@ -46,8 +51,10 @@ const create = async (ctx, next) => {
 
 /**
  * 更新分类：/api/v1.0/category/update/:id PUT
- * id:分类id
- * name:唯一性约束、非空约束
+ *
+ * id:分类id Integer
+ * name:分类名称 String
+ *
  * @param ctx
  * @param next
  * @returns {Promise.<void>}
@@ -68,7 +75,8 @@ const update = async (ctx, next) => {
 
 /**
  * 删除分类：/api/v1.0/category/destroy/:id DELETE
- * id:分类id
+ *
+ * id:分类id Integer
  *
  * @param ctx
  * @param next
@@ -88,7 +96,8 @@ const destroy = async (ctx, next) => {
 
 /**
  * 根据ID查找分类：/api/v1.0/category/findById/:id GET
- * id:分类id
+ *
+ * id:分类id Integer
  *
  * @param ctx
  * @param next
@@ -111,7 +120,8 @@ const findById = async (ctx, next) => {
 
 /**
  * 根据Name查找分类：/api/v1.0/category/findByName/:name GET
- * name:分类名称
+ *
+ * name:分类名称 String
  *
  * @param ctx
  * @param next
@@ -133,11 +143,33 @@ const findByName = async (ctx, next) => {
     }
 };
 
+/**
+ * 将数据库对象数组转换为数据（JSON）对象数组
+ *
+ * @param categories 数据库对象数组
+ * @returns {Array}
+ * @private
+ */
+const _toListJson = async (categories) => {
+    let results = [];
+    for (let i = 0; i < categories.length; i++) {
+        let item = categories[i];
+        let temp = item.dataValues;
+
+        let articles = await item.getArticles({
+            where: {
+                state: 1
+            }
+        });
+        temp.count = articles.length;
+        results.push(temp);
+    }
+    results.sort((data1, data2) => {
+        return data2["count"] - data1["count"];
+    });
+    return results;
+};
+
 module.exports = {
-    list,
-    create,
-    update,
-    destroy,
-    findById,
-    findByName
+    list, create, update, destroy, findById, findByName
 };

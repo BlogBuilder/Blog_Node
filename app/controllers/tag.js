@@ -1,8 +1,7 @@
 /**
- * Tag
+ * Tag API
  */
 const {Tag} = require('../../db/db');
-const {_toListJson} = require('../format/tagFormat');
 let ApiError = require('../error/ApiError');
 const ApiErrorNames = require('../error/ApiErrorNames');
 
@@ -13,7 +12,7 @@ const ApiErrorNames = require('../error/ApiErrorNames');
  * @param next
  * @returns {Promise.<void>}
  */
-const list = async(ctx, next) => {
+const list = async (ctx, next) => {
     try {
         let tags = await Tag.findAll();
         ctx.body = {
@@ -26,13 +25,14 @@ const list = async(ctx, next) => {
 
 /**
  * 创建标签：/api/v1.0/tag/create  POST
- * name:唯一性约束、非空约束
+ *
+ * name:标签名称 String
  *
  * @param ctx
  * @param next
  * @returns {Promise.<void>}
  */
-const create = async(ctx, next) => {
+const create = async (ctx, next) => {
     try {
         await Tag.create({
             'name': ctx.request.body.name
@@ -45,13 +45,15 @@ const create = async(ctx, next) => {
 
 /**
  * 更新标签：/api/v1.0/tag/update/:id PUT
- * id:标签id
+ *
+ * id:标签id Integer
+ *
  * name:唯一性约束、非空约束
  * @param ctx
  * @param next
  * @returns {Promise.<void>}
  */
-const update = async(ctx, next) => {
+const update = async (ctx, next) => {
     try {
         let tagId = ctx.params.id;
         let tag = await Tag.findById(tagId);
@@ -67,13 +69,14 @@ const update = async(ctx, next) => {
 
 /**
  * 删除标签：/api/v1.0/tag/destroy/:id DELETE
- * id:标签id
+ *
+ * id:标签id Integer
  *
  * @param ctx
  * @param next
  * @returns {Promise.<void>}
  */
-const destroy = async(ctx, next) => {
+const destroy = async (ctx, next) => {
     try {
         let tagId = ctx.params.id;
         let tag = await Tag.findById(tagId);
@@ -87,13 +90,14 @@ const destroy = async(ctx, next) => {
 
 /**
  * 根据ID查找标签：/api/v1.0/tag/findById/:id GET
- * id:标签id
+ *
+ * id:标签id Integer
  *
  * @param ctx
  * @param next
  * @returns {Promise.<void>}
  */
-const findById = async(ctx, next) => {
+const findById = async (ctx, next) => {
     try {
         let tagId = ctx.params.id;
         let tag = await Tag.findById(tagId);
@@ -110,13 +114,14 @@ const findById = async(ctx, next) => {
 
 /**
  * 根据Name查找标签：/api/v1.0/tag/findByName/:name GET
- * name:标签名称
+ *
+ * name:标签名称 String
  *
  * @param ctx
  * @param next
  * @returns {Promise.<void>}
  */
-const findByName = async(ctx, next) => {
+const findByName = async (ctx, next) => {
     try {
         let tagName = ctx.params.name;
         let tags = await Tag.findAll({
@@ -132,11 +137,35 @@ const findByName = async(ctx, next) => {
     }
 };
 
+
+/**
+ * 将数据库对象数组转换为数据（JSON）对象数组
+ *
+ * @param tags 数据库对象数组
+ * @returns {Array}
+ * @private
+ */
+const _toListJson = async (tags) => {
+    let results = [];
+    for (let i = 0; i < tags.length; i++) {
+        let item = tags[i];
+        let temp = item.dataValues;
+
+        let articles = await item.getArticles({
+            where: {
+                state: 1
+            }
+        });
+        temp.count = articles.length;
+        results.push(temp);
+    }
+    results.sort((data1, data2) => {
+        return data2["count"] - data1["count"];
+    });
+    return results;
+};
+
+
 module.exports = {
-    list,
-    create,
-    update,
-    destroy,
-    findById,
-    findByName
+    list, create, update, destroy, findById, findByName
 };
