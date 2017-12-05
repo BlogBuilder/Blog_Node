@@ -88,12 +88,13 @@ const findById = async(ctx, next) => {
         let articleId = ctx.params.id;
         let article = await Article.findById(articleId);
         if (article !== null) {
-            let results = await _toDetailJson(article]);
+            let results = await _toDetailJson(article);
             ctx.body = {
                 results: results
             };
         } else throw new ApiError(ApiErrorNames.ID_NOT_EXIST);
     } catch (err) {
+        console.log(err);
         throw err;
     }
 };
@@ -131,8 +132,27 @@ const _toDetailJson = async(article) => {
     data.materials = await article.getMaterials({
         'attributes': ['id', 'path']
     });
+    data.prev = await Article.findOne({
+        attributes: ["id"],
+        where: {
+            id: {
+                '$gt': article.get("id"),
+            }
+        }
+    });
+    data.next = await Article.findOne({
+        attributes: ["id"],
+        where: {
+            id: {
+                '$lt': article.get("id"),
+            }
+        },
+        'order': [
+            ['id', 'DESC']
+        ]
+    });
     delete data.categoryId;
-    return results;
+    return data;
 };
 
 
