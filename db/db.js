@@ -99,6 +99,35 @@ const Material = sequelize.define('material', {
     deletedAt: false
 });
 
+//评论数据表
+const Comment = sequelize.define('comment', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    nick: {
+        type: Sequelize.STRING,
+        notNull: true,
+        defaultValue: 0
+    },
+    content: {
+        type: Sequelize.TEXT,
+        notNull: true
+    },
+    avatar: {
+        type: Sequelize.STRING,
+        notNull: true
+    }
+}, {
+    freezeTableName: true,
+    tableName: 'db_comment',
+    timestamps: true,
+    createdAt: 'create_time',
+    updatedAt: 'update_time',
+    deletedAt: false
+});
+
 //文章 标签 中间表
 const Article_Tag = sequelize.define('article_tag', {
     id: {
@@ -124,10 +153,18 @@ Tag.belongsToMany(Article, {through: Article_Tag});
 Material.belongsTo(Article);
 Article.hasMany(Material);
 
+//文章 评论  关联
+Comment.belongsTo(Article);
+Article.hasMany(Comment);
+//评论 父级评论 关联
+Comment.belongsTo(Comment);
+Comment.hasMany(Comment);
+
 module.exports = {
     Tag,
     Category,
     Material,
     Article,
+    Comment,
     Article_Tag
 };

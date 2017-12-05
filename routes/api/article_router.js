@@ -1,5 +1,5 @@
 /**
- * TAG路由
+ * Article路由
  */
 const router = require('koa-router')();
 const article_controller = require('../../app/controllers/article');

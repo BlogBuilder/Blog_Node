@@ -1,5 +1,5 @@
 /**
- * TAG路由
+ * Category路由
  */
 const router = require('koa-router')();
 const category_controller = require('../../app/controllers/category');
