@@ -2,7 +2,7 @@
  * Article API
  */
 
-const {Article, Category, Tag} = require('../../db/db');
+const {Article, Category, Tag, Article_Tag} = require('../../db/db');
 const {countPerPage} = require('../../config/default');
 const {getCurrentMonthFirst, getCurrentMonthLast} = require('../../utils/dateUtils');
 const ApiError = require('../error/ApiError');
@@ -50,16 +50,20 @@ const list = async(ctx, next) => {
             })
         }
         //文章标签查询
-        if (data["tagsId[]"]) {
-            console.log(data["tagsId[]"]);
-            includes.push({
-                'model': Tag,
-                'where': {
-                    'id': {
-                        '$in': data["tagsId[]"]
-                    }
+        if (data["tagsId"]) {
+            let articleIds = await Article_Tag.findAll({
+                attributes: ["articleId"],
+                where: {
+                    tagId: data["tagsId"]
                 }
-            })
+            });
+            let idArr = [];
+            for (let i = 0; i < articleIds.length; i++) {
+                idArr.push(articleIds[i].articleId);
+            }
+            query.id = {
+                '$in': idArr
+            }
         }
         //创建时间查询
         if (data["create_time"]) {
@@ -69,7 +73,7 @@ const list = async(ctx, next) => {
             }
         }
         let currentPage = ctx.params.currentPage;
-        let articles = await Article.findAndCountAll({
+        let articles = await Article.findAndCount({
             attributes: ["id", "type", "title", "summary", "categoryId", "create_time"],
             limit: countPerPage,
             offset: countPerPage * (currentPage - 1),
@@ -84,9 +88,10 @@ const list = async(ctx, next) => {
             results,
             currentPage,
             rowCount: countPerPage,
-            totalPage: articles.count / countPerPage
+            totalPage: Math.ceil(articles.count / countPerPage)
         };
     } catch (err) {
+        console.log(err);
         throw err;
     }
 };

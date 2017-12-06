@@ -23,12 +23,11 @@ let response_formatter = (ctx) => {
 };
 
 let url_filter = (pattern) => {
-    return async (ctx, next) => {
+    return async(ctx, next) => {
         let reg = new RegExp(pattern);
         try {
             await next();
         } catch (error) {
-            console.log(error);
             if (error instanceof Sequelize.UniqueConstraintError) {
                 throw new ApiError(ApiErrorNames.UNIQUE_ERROR);
             }

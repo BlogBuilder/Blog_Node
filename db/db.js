@@ -202,6 +202,7 @@ Category.hasMany(Article);
 Article.belongsToMany(Tag, {through: Article_Tag});
 Tag.belongsToMany(Article, {through: Article_Tag});
 
+
 //文章 素材 关联
 Material.belongsTo(Article);
 Article.hasMany(Material);
