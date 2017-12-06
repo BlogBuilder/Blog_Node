@@ -14,7 +14,9 @@ const catchHandle = async(ctx, next) => {
             "/api/v1.0/login",
             "/api/v1.0/tag/list",
             "/api/v1.0/category/list",
-            "/api/v1.0/article/list"
+            "/api/v1.0/article/list",
+            "/api/v1.0/article/findById",
+            "/api/v1.0/comment/list"
         ];
         let result = true;
         for (let i = 0; i < exclude.length; i++) {

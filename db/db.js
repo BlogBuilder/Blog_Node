@@ -123,7 +123,6 @@ const Article = sequelize.define('article', {
         notNull: true,
         defaultValue: 0
     }
-
 }, {
     freezeTableName: true,
     tableName: 'db_article',

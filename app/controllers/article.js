@@ -7,6 +7,7 @@ const {countPerPage} = require('../../config/default');
 const {getCurrentMonthFirst, getCurrentMonthLast} = require('../../utils/dateUtils');
 const ApiError = require('../error/ApiError');
 const ApiErrorNames = require('../error/ApiErrorNames');
+const moment = require('moment');
 
 /**
  * 文章列表：/api/v1.0/article/list/:currentPage  GET
@@ -267,6 +268,7 @@ const _toArticleJson = async(articles) => {
     for (let i = 0; i < articles.length; i++) {
         let item = articles[i];
         let data = item.dataValues;
+        data.create_time = moment(item.create_time).format('YYYY-MM-DD HH:mm:ss');
         data.category = await item.getCategory({
             'attributes': ['id', 'name']
         });
@@ -276,6 +278,7 @@ const _toArticleJson = async(articles) => {
         data.materials = await item.getMaterials({
             'attributes': ['id', 'path']
         });
+        data.comment_num = (await item.getComments()).length;
         delete data.categoryId;
         results.push(data);
     }
@@ -319,6 +322,7 @@ const _toDetailJson = async(article) => {
             ['id', 'DESC']
         ]
     });
+    data.create_time = moment(article.create_time).format('YYYY-MM-DD HH:mm:ss');
     delete data.categoryId;
     return data;
 };
