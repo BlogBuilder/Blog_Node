@@ -10,15 +10,14 @@ const tables = require('./db/db');
 
 const index = require('./routes/index')
 const response_formatter = require('./middlewares/responseFormatter');
-const loginCheck = require('./middlewares/loginCheck');
 const error_catch = require('./middlewares/errorCatch');
 
 const jwt = require('jsonwebtoken');
 
 let token = jwt.sign({foo: 'bar', iat: Math.floor(Date.now() / 1000) - 30}, 'blog', {
-    expiresIn: '20'
+    expiresIn: 40
 });
-console.log(token);
+
 
 // 异常处理
 onerror(app);
@@ -53,7 +52,6 @@ app.use(async(ctx, next) => {
     }
 });
 
-app.use(loginCheck);
 
 //Final Error Handle
 app.use(error_catch);

@@ -14,10 +14,7 @@ let token = jwt.sign({foo: 'bar'}, 'shhhhh', {expiresIn: 10});
  */
 const login = async(ctx, next) => {
     try {
-        let result = jwt.verify(token, 'shhhhh');
-        ctx.body = {
-            results: result
-        };
+
     } catch (err) {
         if (err instanceof jwt.TokenExpiredError) {
             throw new ApiError(ApiErrorNames.NO_SIGNED_IN);
