@@ -4,6 +4,7 @@
 let ApiError = require('../app/error/ApiError');
 const ApiErrorNames = require('../app/error/ApiErrorNames');
 const Sequelize = require('sequelize');
+const jwt = require('jsonwebtoken');
 
 let response_formatter = (ctx) => {
     //如果有返回数据，将返回数据添加到data中
@@ -27,11 +28,23 @@ let url_filter = (pattern) => {
         try {
             await next();
         } catch (error) {
+            console.log(error);
             if (error instanceof Sequelize.UniqueConstraintError) {
                 throw new ApiError(ApiErrorNames.UNIQUE_ERROR);
             }
             if (error instanceof Sequelize.ValidationError) {
                 throw new ApiError(ApiErrorNames.DATA_RULE_ERROR);
+            }
+            if (error instanceof jwt.JsonWebTokenError) {
+                throw new ApiError(ApiErrorNames.SIGNATURE_ERROR);
+            }
+            if (error instanceof jwt.TokenExpiredError) {
+                throw new ApiError(ApiErrorNames.INFO_EXPIRE_ERROR);
+            }
+
+
+            if (error instanceof SyntaxError) {
+                throw new ApiError(ApiErrorNames.SERVICE_ERROR);
             }
             throw error;
         }

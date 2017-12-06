@@ -3,20 +3,26 @@ const app = new Koa();
 const json = require('koa-json');
 const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser');
+const jwt = require('jsonwebtoken');
+const session = require("koa-session2");
 const logger = require('koa-logger');
 const logUtil = require('./utils/logUtils');
 const cors = require('koa-cors');
 const tables = require('./db/db');
+const config = require('./config/default');
 
-const index = require('./routes/index')
+const index = require('./routes/index');
 const response_formatter = require('./middlewares/responseFormatter');
 const error_catch = require('./middlewares/errorCatch');
 
-const jwt = require('jsonwebtoken');
 
-let token = jwt.sign({foo: 'bar', iat: Math.floor(Date.now() / 1000) - 30}, 'blog', {
-    expiresIn: 40
+let token = jwt.sign({email: "154256698@qq.com", password: "920221", nick: "水果控"}, config.publicKey, {
+    expiresIn: 100
 });
+
+console.log("======================")
+console.log(token);
+console.log("======================")
 
 
 // 异常处理
@@ -28,16 +34,21 @@ app.use(bodyparser({
     formLimit: '10mb'
 }));
 
+app.use(session({
+    key: "SESSIONID",
+    maxAge: 20 * 60 * 1000 //10分钟SESSION过期
+}));
 
 app.use(json());
 app.use(logger());
 app.use(cors());
 
+
 //初始化数据库
 for (let name in tables) tables[name].sync();
 
 // 日志操作
-app.use(async(ctx, next) => {
+app.use(async (ctx, next) => {
     const start = new Date();
     let ms;
     try {

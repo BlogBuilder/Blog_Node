@@ -12,14 +12,36 @@ const User = sequelize.define('user', {
         allowNull: false,
         unique: true
     },
-    password: {
+    nick: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        defaultValue: '佚名'
+    },
+    password: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    avatar: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    activation: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    state: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
     },
     count: {
         type: Sequelize.INTEGER,
-        notNull: true,
+        allowNull: false,
+        defaultValue: 0
+    },
+    type: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
         defaultValue: 0
     }
 }, {
@@ -197,5 +219,6 @@ module.exports = {
     Material,
     Article,
     Comment,
-    Article_Tag
+    Article_Tag,
+    User
 };

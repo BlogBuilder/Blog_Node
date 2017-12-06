@@ -6,19 +6,18 @@ const ApiErrorNames = require('../app/error/ApiErrorNames');
 const jwt = require('jsonwebtoken');
 
 
-const catchHandle = async(ctx, next) => {
+const catchHandle = async (ctx, next) => {
     try {
-        let token = ctx.request.headers.cookie;
-        // jwt.verify(token, 'blog', function (err, decoded) {
-        //     if (err) {
-        //         console.log(err);
-        //         throw new ApiError(ApiErrorNames.NO_SIGNED_IN);
-        //     } else {
-        //         console.log("这是返回的token：" + token);
-        //
-        //     }
-        // });
-        await next();
+        let SESSIONID = ctx.cookies.get("SESSIONID");
+        if (SESSIONID !== null) {
+            console.log("/////////////");
+            console.log(SESSIONID);
+            console.log("=============")
+            console.log(ctx.cookies);
+
+            await next();
+        } else
+            throw new ApiError(ApiErrorNames.NO_SIGNED_IN);
     } catch (error) {
         //如果异常类型是API异常，将错误信息添加到响应体中返回。
         if (error instanceof ApiError) {
