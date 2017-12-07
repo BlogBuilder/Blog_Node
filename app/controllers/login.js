@@ -82,9 +82,19 @@ const fetchState = async (ctx, next) => {
 };
 
 
+const logOff = async (ctx, next) => {
+    try {
+        delete ctx.session.loginInfo;
+        ctx.body = {
+            results:"success"
+        };
+    } catch (err) {
+        throw err;
+    }
+};
+
 module.exports = {
-    login,
-    fetchState
+    login, fetchState, logOff
 };
 
 
