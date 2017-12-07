@@ -20,7 +20,7 @@ const {UUID} = require('../../utils/randomUtils');
  * @param next
  * @returns {Promise.<void>}
  */
-const register = async (ctx, next) => {
+const register = async(ctx, next) => {
     try {
         let userInfo = ctx.request.body.userInfo;
         let data = null;
@@ -52,7 +52,7 @@ const register = async (ctx, next) => {
  * @param next
  * @returns {Promise.<void>}
  */
-const update = async (ctx, next) => {
+const update = async(ctx, next) => {
     try {
         let userInfo = ctx.request.body.userInfo;
         let loginInfo = ctx.session.loginInfo;

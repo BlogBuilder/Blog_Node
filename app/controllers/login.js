@@ -16,7 +16,7 @@ const md5 = require('md5');
  * @param next
  * @returns {Promise.<void>}
  */
-const login = async (ctx, next) => {
+const login = async(ctx, next) => {
     try {
         let loginInfo = ctx.request.body.loginInfo;
         let data = null;
@@ -65,7 +65,7 @@ const login = async (ctx, next) => {
  * @returns {Promise.<void>}
  */
 
-const fetchState = async (ctx, next) => {
+const fetchState = async(ctx, next) => {
     try {
         let loginInfo = ctx.session.loginInfo;
         if (loginInfo) {
@@ -82,19 +82,63 @@ const fetchState = async (ctx, next) => {
 };
 
 
-const logOff = async (ctx, next) => {
+const logOff = async(ctx, next) => {
     try {
         delete ctx.session.loginInfo;
         ctx.body = {
-            results:"success"
+            results: "success"
         };
     } catch (err) {
         throw err;
     }
 };
 
+/**
+ * 管理员登录验证：/api/v1.0/login/admin  POST
+ *
+ * loginInfo：加密后的登陆信息
+ *
+ * @param ctx
+ * @param next
+ * @returns {Promise.<void>}
+ */
+const admin = async(ctx, next) => {
+    try {
+        let loginInfo = ctx.request.body.loginInfo;
+        let data = null;
+        await jwt.verify(loginInfo, config.publicKey, (err, decoded) => {
+            if (err) {
+                throw err;
+            } else {
+                data = decoded;
+            }
+        });
+        let user = config.adminUser;
+        if (user === data.username) {
+            //验证用户密码
+            if (config.adminPassword === md5(data.password)) {
+                //验证成功
+                let token = jwt.sign({isAdmin: true}, config.privateKey, {
+                    expiresIn: 40
+                });
+                ctx.session.loginInfo = {
+                    isAdmin: true,
+                    token
+                };
+            } else {
+                throw new ApiError(ApiErrorNames.PASSWORD_ERROR);
+            }
+        } else {
+            throw new ApiError(ApiErrorNames.ID_NOT_EXIST);
+        }
+    } catch (err) {
+        throw err;
+    }
+};
+
+
 module.exports = {
-    login, fetchState, logOff
+    login, fetchState, logOff, admin
 };
 
 

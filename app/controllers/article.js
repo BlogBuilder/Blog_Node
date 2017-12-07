@@ -32,11 +32,11 @@ const list = async(ctx, next) => {
             query['$or'] = [
                 {
                     title: {
-                        '$like': '%' + data["key"] + '%',
+                        '$like': '%' + data["key"] + '%'
                     }
                 }, {
                     summary: {
-                        '$like': '%' + data["key"] + '%',
+                        '$like': '%' + data["key"] + '%'
                     }
                 }
             ];
