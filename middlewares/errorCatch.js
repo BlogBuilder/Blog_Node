@@ -16,7 +16,8 @@ const catchHandle = async(ctx, next) => {
             "/api/v1.0/category/list",
             "/api/v1.0/article/list",
             "/api/v1.0/article/findById",
-            "/api/v1.0/comment/list"
+            "/api/v1.0/comment/list",
+            "/api/v1.0/comment/create"
         ];
         let result = true;
         for (let i = 0; i < exclude.length; i++) {
@@ -33,6 +34,7 @@ const catchHandle = async(ctx, next) => {
                 throw new ApiError(ApiErrorNames.NO_SIGNED_IN);
         } else  await next();
     } catch (error) {
+        console.log(error);
         //如果异常类型是API异常，将错误信息添加到响应体中返回。
         if (error instanceof ApiError) {
             ctx.status = 200;

@@ -213,6 +213,9 @@ Article.hasMany(Comment);
 Comment.belongsTo(Comment);
 Comment.hasMany(Comment);
 
+//评论 用户 关联
+Comment.belongsTo(User);
+User.hasMany(Comment);
 module.exports = {
     Tag,
     Category,
