@@ -31,8 +31,10 @@ onerror(app);
 //参数解析
 app.use(bodyparser({
     enableTypes: ['json', 'form', 'text'],
-    formLimit: '10mb'
+    formLimit: '100mb'
 }));
+
+
 
 app.use(session({
     key: "SESSIONID",
@@ -48,7 +50,7 @@ app.use(cors());
 for (let name in tables) tables[name].sync();
 
 // 日志操作
-app.use(async (ctx, next) => {
+app.use(async(ctx, next) => {
     const start = new Date();
     let ms;
     try {

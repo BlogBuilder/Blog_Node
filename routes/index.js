@@ -26,6 +26,7 @@ const articleRouterAdmin = require('./api/admin/articleRouter');
 // const commentRouterAdmin = require('./api/admin/commentRouter');
 // const loginRouterAdmin = require('./api/admin/loginRouter');
 // const userRouterAdmin = require('./api/admin/userRouter');
+const uploadRouterAdmin = require('./api/admin/uploadRouter');
 
 
 router.use('/api/v1.0/admin/category', categoryRouterAdmin.routes(), categoryRouterAdmin.allowedMethods());
@@ -34,6 +35,8 @@ router.use('/api/v1.0/admin/article', articleRouterAdmin.routes(), articleRouter
 // router.use('/api/v1.0/admin/comment', commentRouterAdmin.routes(), commentRouterAdmin.allowedMethods());
 // router.use('/api/v1.0/admin/login', loginRouterAdmin.routes(), loginRouterAdmin.allowedMethods());
 // router.use('/api/v1.0/admin/user', userRouterAdmin.routes(), userRouterAdmin.allowedMethods());
+
+router.use('/api/v1.0/admin/upload', uploadRouterAdmin.routes(), uploadRouterAdmin.allowedMethods());
 
 
 module.exports = router;

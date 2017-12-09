@@ -2,3 +2,4 @@ node_modules/
 db/default.js
 .idea/
 logs/
+upload/
