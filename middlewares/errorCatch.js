@@ -3,37 +3,10 @@
  */
 let ApiError = require('../app/error/ApiError');
 const ApiErrorNames = require('../app/error/ApiErrorNames');
-const jwt = require('jsonwebtoken');
 
 
 const catchHandle = async(ctx, next) => {
     try {
-
-        // let exclude = [
-        //     "/api/v1.0/login/fetchState",
-        //     "/api/v1.0/login",
-        //     "/api/v1.0/logOff",
-        //     "/api/v1.0/tag/list",
-        //     "/api/v1.0/category/list",
-        //     "/api/v1.0/article/list",
-        //     "/api/v1.0/article/findById",
-        //     "/api/v1.0/comment/list",
-        //     "/api/v1.0/comment/create"
-        // ];
-        // let result = true;
-        // for (let i = 0; i < exclude.length; i++) {
-        //     let url = exclude[i];
-        //     if (ctx.originalUrl.split('?')[0].indexOf(url) !== -1) {
-        //         result = false;
-        //     }
-        //     if (!result)break;
-        // }
-        // if (result) {
-        //     if (ctx.session.loginInfo) {
-        //         await next();
-        //     } else
-        //         throw new ApiError(ApiErrorNames.NO_SIGNED_IN);
-        // } else  await next();
         await next();
     } catch (error) {
         console.log(error);

@@ -1,59 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('./index');
 
-const User = sequelize.define('user', {
-    id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
-    },
-    nick: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: '佚名'
-    },
-    password: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    avatar: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    activation: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    state: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0
-    },
-    count: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0
-    },
-    type: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0
-    }
-}, {
-    freezeTableName: true,
-    tableName: 'db_user',
-    timestamps: true,
-    createdAt: 'create_time',
-    updatedAt: 'update_time',
-    deletedAt: 'delete_time',
-    paranoid: true
-});
-
 //标签数据表
 const Tag = sequelize.define('tag', {
     id: {
@@ -65,6 +12,10 @@ const Tag = sequelize.define('tag', {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
+    },
+    state: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1
     }
 }, {
     freezeTableName: true,
@@ -86,15 +37,17 @@ const Category = sequelize.define('category', {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
+    },
+    state: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1
     }
 }, {
     freezeTableName: true,
     tableName: 'db_category',
-    timestamps: true,
-    createdAt: 'create_time',
-    updatedAt: 'update_time',
-    deletedAt: false
+    timestamps: false
 });
+
 
 //文章数据表
 const Article = sequelize.define('article', {
@@ -103,7 +56,10 @@ const Article = sequelize.define('article', {
         primaryKey: true,
         autoIncrement: true
     },
-    type: Sequelize.INTEGER,
+    type: {
+        type: Sequelize.INTEGER,
+        notNull: true,
+    },
     title: {
         type: Sequelize.STRING,
         length: 100
@@ -118,7 +74,7 @@ const Article = sequelize.define('article', {
         notNull: true,
         defaultValue: 0
     },
-    viewCount: {
+    view_count: {
         type: Sequelize.INTEGER,
         notNull: true,
         defaultValue: 0
@@ -128,7 +84,7 @@ const Article = sequelize.define('article', {
     tableName: 'db_article',
     timestamps: true,
     createdAt: 'create_time',
-    updatedAt: 'update_time',
+    updatedAt: false,
     deletedAt: false
 });
 
@@ -139,16 +95,13 @@ const Material = sequelize.define('material', {
         primaryKey: true,
         autoIncrement: true
     },
-    path: {
+    material: {
         type: Sequelize.TEXT
     }
 }, {
     freezeTableName: true,
-    tableName: 'db_material',
-    timestamps: true,
-    createdAt: 'create_time',
-    updatedAt: 'update_time',
-    deletedAt: false
+    tableName: 'db_article_material',
+    timestamps: false
 });
 
 //评论数据表
@@ -158,7 +111,7 @@ const Comment = sequelize.define('comment', {
         primaryKey: true,
         autoIncrement: true
     },
-    nick: {
+    name: {
         type: Sequelize.STRING,
         notNull: true,
         defaultValue: 0
@@ -167,16 +120,20 @@ const Comment = sequelize.define('comment', {
         type: Sequelize.TEXT,
         notNull: true
     },
-    avatar: {
+    photo: {
         type: Sequelize.STRING,
         notNull: true
+    },
+    state: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1
     }
 }, {
     freezeTableName: true,
     tableName: 'db_comment',
     timestamps: true,
     createdAt: 'create_time',
-    updatedAt: 'update_time',
+    updatedAt: false,
     deletedAt: false
 });
 
@@ -194,34 +151,59 @@ const Article_Tag = sequelize.define('article_tag', {
 });
 
 //文章 分类 关联
-Article.belongsTo(Category);
-Category.hasMany(Article);
+Article.belongsTo(Category, {
+    foreignKey: {
+        name: "category_id"
+    }
+});
+Category.hasMany(Article,{
+    foreignKey: {
+        name: "category_id"
+    }
+});
 
 //文章 标签 关联
-Article.belongsToMany(Tag, {through: Article_Tag});
-Tag.belongsToMany(Article, {through: Article_Tag});
+Article.belongsToMany(Tag, {
+    through: Article_Tag, foreignKey: {
+        name: "tag_id"
+    }
+});
+Tag.belongsToMany(Article, {
+    through: Article_Tag, foreignKey: {
+        name: "article_id"
+    }
+});
 
 
 //文章 素材 关联
-Material.belongsTo(Article);
+Material.belongsTo(Article, {
+    foreignKey: {
+        name: "category_id"
+    }
+});
 Article.hasMany(Material);
 
 //文章 评论  关联
-Comment.belongsTo(Article);
+Comment.belongsTo(Article, {
+    foreignKey: {
+        name: "article_id"
+    }
+});
 Article.hasMany(Comment);
 //评论 父级评论 关联
-Comment.belongsTo(Comment);
+Comment.belongsTo(Comment, {
+    foreignKey: {
+        name: "parent"
+    }
+});
 Comment.hasMany(Comment);
 
-//评论 用户 关联
-Comment.belongsTo(User);
-User.hasMany(Comment);
+
 module.exports = {
     Tag,
     Category,
     Material,
     Article,
     Comment,
-    Article_Tag,
-    User
+    Article_Tag
 };

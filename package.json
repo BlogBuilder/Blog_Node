@@ -46,7 +46,7 @@
     "chai": "^4.1.2",
     "log4js": "^0.6.38",
     "mocha": "^4.0.1",
-    "nodemon": "^1.8.1",
+    "nodemon": "^1.12.5",
     "supertest": "^3.0.0"
   },
   "babel": {
