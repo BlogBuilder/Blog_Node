@@ -156,7 +156,7 @@ Article.belongsTo(Category, {
         name: "category_id"
     }
 });
-Category.hasMany(Article,{
+Category.hasMany(Article, {
     foreignKey: {
         name: "category_id"
     }
@@ -178,10 +178,14 @@ Tag.belongsToMany(Article, {
 //文章 素材 关联
 Material.belongsTo(Article, {
     foreignKey: {
-        name: "category_id"
+        name: "article_id"
     }
 });
-Article.hasMany(Material);
+Article.hasMany(Material, {
+    foreignKey: {
+        name: "article_id"
+    }
+});
 
 //文章 评论  关联
 Comment.belongsTo(Article, {
@@ -189,14 +193,22 @@ Comment.belongsTo(Article, {
         name: "article_id"
     }
 });
-Article.hasMany(Comment);
+Article.hasMany(Comment, {
+    foreignKey: {
+        name: "article_id"
+    }
+});
 //评论 父级评论 关联
 Comment.belongsTo(Comment, {
     foreignKey: {
         name: "parent"
     }
 });
-Comment.hasMany(Comment);
+Comment.hasMany(Comment, {
+    foreignKey: {
+        name: "parent"
+    }
+});
 
 
 module.exports = {
